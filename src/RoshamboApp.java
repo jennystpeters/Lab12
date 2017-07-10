@@ -47,7 +47,7 @@ public class RoshamboApp {
                 System.out.println(opposition + ": " + oppositionSelection);
             } else {
                 opposition = "TheSharks";
-                oppositionSelection = jet.generateRoshambo();
+                oppositionSelection = shark.generateRoshambo();
                 System.out.println(opposition + ": " + oppositionSelection);
             }
 
