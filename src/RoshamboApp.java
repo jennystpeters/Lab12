@@ -42,13 +42,12 @@ public class RoshamboApp {
                 opponent = "TheJets";
                 //TheJets always select rock:
                 opponentSelection = jet.generateRoshambo();
-                System.out.println(opponent + ": " + opponentSelection);
             } else {
                 opponent = "TheSharks";
                 //TheSharks randomly select rock, paper, or scissors:
                 opponentSelection = shark.generateRoshambo();
-                System.out.println(opponent + ": " + opponentSelection);
             }
+            System.out.println(opponent + ": " + opponentSelection);
 
             //Tally scores for the user and selected opponent:
             tally = result(userSelection, opponentSelection, user.getName(), opponent, tally);
@@ -57,8 +56,8 @@ public class RoshamboApp {
         }
 
         //Print final scores to console:
-        System.out.println(user.getName() + " won " + tally[0][0] + " and lost " + tally[0][1] + ".");
-        System.out.println(opponent + " won " + tally[1][0] + " and lost " + tally[1][1] + ".");
+        System.out.println(user.getName() + " won " + tally[0][0] + ".");
+        System.out.println(opponent + " won " + tally[1][0] + ".");
 
         System.out.println("\nGoodbye");
     }
@@ -78,29 +77,5 @@ public class RoshamboApp {
             System.out.println("Draw!");
         }
         return tally;
-        //Another approach to determine winner:
-        /*if (userSelection != opponentSelection) {
-            if (userSelection == Roshambo.ROCK) {
-                if (opponentSelection == Roshambo.PAPER) {
-                    System.out.println(opponent + " wins!");
-                } else {
-                    System.out.println(user + " wins!");
-                }
-            } else if(userSelection == Roshambo.PAPER) {
-                if (opponentSelection == Roshambo.ROCK) {
-                    System.out.println(user + " wins!");
-                } else {
-                    System.out.println(opponent + " wins!");
-                }
-            } else if(userSelection == Roshambo.SCISSORS) {
-                if (opponentSelection == Roshambo.ROCK) {
-                    System.out.println(opponent + " wins!");
-                } else {
-                    System.out.println(user + " wins!");
-                }
-            }
-        } else {
-            System.out.println("Draw!");
-        }*/
     }
 }
