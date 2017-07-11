@@ -5,14 +5,16 @@ import java.util.Scanner;
  */
 public class Validator {
 
-    public static String getString(Scanner entry, String prompt) {
+    private static Scanner entry = new Scanner(System.in);
+
+    public static String getString(String prompt) {
         System.out.print(prompt);
         String s = entry.next();  // read user entry
         entry.nextLine();  // discard any other data entered on the line
         return s;
     }
 
-    public static String getString(Scanner entry, String prompt, String invalidPrompt, String valid1, String valid2) {
+    public static String getString(String prompt, String invalidPrompt, String valid1, String valid2) {
         boolean isValid = false;
         String s = "";
         while (isValid == false) {
@@ -28,7 +30,7 @@ public class Validator {
         return s;
     }
 
-    public static String getString(Scanner entry, String prompt, String invalidPrompt, String valid1, String valid2, String valid3) {
+    public static String getString(String prompt, String invalidPrompt, String valid1, String valid2, String valid3) {
         boolean isValid = false;
         String s = "";
         while (isValid == false) {
@@ -44,7 +46,7 @@ public class Validator {
         return s;
     }
 
-    public static int getInt(Scanner entry, String prompt) {
+    public static int getInt(String prompt) {
         int i = 0;
         boolean isValid = false;
         while (isValid == false) {
@@ -60,11 +62,11 @@ public class Validator {
         return i;
     }
 
-    public static int getInt(Scanner entry, String prompt, String invalidPrompt, int min, int max) {
+    public static int getInt(String prompt, String invalidPrompt, int min, int max) {
         int i = 0;
         boolean isValid = false;
         while (isValid == false) {
-            i = getInt(entry, prompt);
+            i = getInt(prompt);
             if (i < min)
                 System.out.print(invalidPrompt);
             else if (i > max)

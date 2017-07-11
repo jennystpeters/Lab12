@@ -1,100 +1,106 @@
-import com.sun.scenario.effect.impl.prism.ps.PPSZeroSamplerPeer;
-
-import java.util.HashMap;
-import java.util.Scanner;
-
 /**
  * Created by jenny on 7/10/2017.
  */
 public class RoshamboApp {
 
-    //Validation of user input:
+    //Validate user input:
     private static Validator Validator = new Validator();
-
-//    public Roshambo decideWinner(user) {
-//        if (userInput.equals("rock"))
-//            return Roshambo.rock
-//    }
 
     public static void main(String[] args) {
 
-        Scanner entry = new Scanner(System.in);
         String keepGoing = "y";
         String playerSelected;
-        String opposition;
+        String opponent = null;
         Roshambo userSelection;
-        Roshambo oppositionSelection;
+        Roshambo opponentSelection;
 
+        //Array to tally score and print final results:
+        //tally[0][0] - User Wins / tally[0][1] - User Losses / tally[1][0] - Opponent Wins / tally[1][1] - Opponent Losses
+        int[][] tally = new int[2][2];
+
+        //Create instance of each player:
         User user = new User();
         TheJets jet = new TheJets();
         TheSharks shark = new TheSharks();
 
-        System.out.println("Welcome to Rock Paper Scissors!");
+        System.out.println("Welcome to ROCK PAPER SCISSORS!");
 
-        user.setName(Validator.getString(entry, "\nEnter your name: "));
+        //Set user name:
+        user.setName(Validator.getString("\nEnter your name: "));
 
-        playerSelected = Validator.getString(entry, "\nWould you like to play against TheJets or TheSharks: ", "Sorry, entry must be \"j\" or \"s\". ", "j", "s");
+        //Select opponent - TheJets or TheSharks:
+        playerSelected = Validator.getString("\nWould you like to play against TheJets or TheSharks: ", "Sorry, entry must be \"j\" or \"s\". ", "j", "s");
 
+        //Continue as long as user enters "y" or "Y":
         while (keepGoing.equalsIgnoreCase("y")) {
 
-            //System.out.println(user.getName() + ": " + selectionOptions.get(selection));
+            //Get user's selection of rock, paper, or scissors:
             userSelection = user.generateRoshambo();
             System.out.println("\n" + user.getName() + ": " + userSelection);
 
             if (playerSelected.equalsIgnoreCase("j")) {
-                opposition = "TheJets";
-                oppositionSelection = jet.generateRoshambo();
-                System.out.println(opposition + ": " + oppositionSelection);
+                opponent = "TheJets";
+                //TheJets always select rock:
+                opponentSelection = jet.generateRoshambo();
+                System.out.println(opponent + ": " + opponentSelection);
             } else {
-                opposition = "TheSharks";
-                oppositionSelection = shark.generateRoshambo();
-                System.out.println(opposition + ": " + oppositionSelection);
+                opponent = "TheSharks";
+                //TheSharks randomly select rock, paper, or scissors:
+                opponentSelection = shark.generateRoshambo();
+                System.out.println(opponent + ": " + opponentSelection);
             }
 
-            result(userSelection, oppositionSelection, user.getName(), opposition);
+            //Tally scores for the user and selected opponent:
+            tally = result(userSelection, opponentSelection, user.getName(), opponent, tally);
 
-            keepGoing = Validator.getString(entry, "\nPlay again? (y/n): ", "Sorry, entry must be \"y\" or \"n\". ", "y", "n");
+            keepGoing = Validator.getString("\nPlay again? (y/n): ", "Sorry, entry must be \"y\" or \"n\". ", "y", "n");
         }
+
+        //Print final scores to console:
+        System.out.println(user.getName() + " won " + tally[0][0] + " and lost " + tally[0][1] + ".");
+        System.out.println(opponent + " won " + tally[1][0] + " and lost " + tally[1][1] + ".");
 
         System.out.println("\nGoodbye");
     }
 
-    public static void result(Roshambo userSelection, Roshambo oppositionSelection, String user, String opposition) {
+    //Determine winner of each round and increment score tally:
+    public static int[][] result(Roshambo userSelection, Roshambo opponentSelection, String user, String opponent, int tally[][]) {
 
-        if (userSelection != oppositionSelection) {
-            if (userSelection == Roshambo.rock) {
-                if (oppositionSelection == Roshambo.paper) {
-                    System.out.println(opposition + " wins!");
+        if ((opponentSelection.ordinal() == (userSelection.ordinal() + 1)) || (userSelection.ordinal() == (opponentSelection.ordinal() + 2))) {
+            System.out.println(opponent + " wins!");
+            tally[1][0]++;
+            tally[0][1]++;
+        } else if ((userSelection.ordinal() == (opponentSelection.ordinal() + 1)) || (opponentSelection.ordinal() == (userSelection.ordinal() + 2))) {
+            System.out.println(user + " wins!");
+            tally[0][0]++;
+            tally[1][1]++;
+        } else {
+            System.out.println("Draw!");
+        }
+        return tally;
+        //Another approach to determine winner:
+        /*if (userSelection != opponentSelection) {
+            if (userSelection == Roshambo.ROCK) {
+                if (opponentSelection == Roshambo.PAPER) {
+                    System.out.println(opponent + " wins!");
                 } else {
                     System.out.println(user + " wins!");
                 }
-            } else if(userSelection == Roshambo.paper) {
-                if (oppositionSelection == Roshambo.rock) {
+            } else if(userSelection == Roshambo.PAPER) {
+                if (opponentSelection == Roshambo.ROCK) {
                     System.out.println(user + " wins!");
                 } else {
-                    System.out.println(opposition + " wins!");
+                    System.out.println(opponent + " wins!");
                 }
-            } else if(userSelection == Roshambo.scissors) {
-                if (oppositionSelection == Roshambo.rock) {
-                    System.out.println(opposition + " wins!");
+            } else if(userSelection == Roshambo.SCISSORS) {
+                if (opponentSelection == Roshambo.ROCK) {
+                    System.out.println(opponent + " wins!");
                 } else {
                     System.out.println(user + " wins!");
                 }
             }
         } else {
             System.out.println("Draw!");
-        }
-
-//        HashMap<HashMap.Entry<Roshambo, Roshambo>, String> result = new HashMap<HashMap.Entry<Roshambo, Roshambo>, String>();
-//
-//        result.put(Roshambo.rock, Roshambo.rock>, "Draw!");
-//
-//        String[][] result = new String[][]{
-//                {"rock", "rock", "rock", "paper", "paper", "paper", "scissors", "scissors", "scissors"},
-//                {"rock", "paper", "scissors", "rock", "paper", "scissors", "rock", "paper", "scissors"},
-//                {"Draw!", opposition + " wins!", user + " wins!", user + " wins!", "Draw!", opposition + " wins!", opposition + " wins!", user + " wins!", "Draw!"}};
-
-
+        }*/
     }
-
 }

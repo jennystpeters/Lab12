@@ -1,13 +1,12 @@
-import java.util.Random;
-
 /**
  * Created by jenny on 7/10/2017.
  */
 public class TheSharks extends Player {
 
-    //Generate and return a Roshambo value
+    //Generate and return a Roshambo value:
     @Override
     public Roshambo generateRoshambo() {
+        //Randomly select rock, paper, or scissors:
         return Roshambo.values()[getMathRandomNumGenerator()];
     }
 
