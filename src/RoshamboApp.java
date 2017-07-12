@@ -65,6 +65,10 @@ public class RoshamboApp {
     //Determine winner of each round and increment score tally:
     public static int[][] result(Roshambo userSelection, Roshambo opponentSelection, String user, String opponent, int tally[][]) {
 
+        //Nomenclature: (user, opponent) (R - 0, P - 1, S - 2)
+        //(0,1), (1,2), (2,0) - Opponent Wins
+        //(0,2), (1,0), (2,1) - User Wins
+        //(0,0), (1,1), (2,2) - Draw
         if ((opponentSelection.ordinal() == (userSelection.ordinal() + 1)) || (userSelection.ordinal() == (opponentSelection.ordinal() + 2))) {
             System.out.println(opponent + " wins!");
             tally[1][0]++;

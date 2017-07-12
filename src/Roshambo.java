@@ -11,6 +11,7 @@ public enum Roshambo {
         this.stringVersion = stringVersion;
     }
 
+    //Override to output Roshambo as string (as declared for stringVersion) instead of reference location:
     @Override
     public String toString() {
         return stringVersion;
